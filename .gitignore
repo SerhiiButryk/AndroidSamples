@@ -83,3 +83,14 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# Non project files
+**/.gradle/*
+**/.idea/
+**/.settings/
+**/.project
+**/.classpath
+**/.externalNativeBuild/
+**/build/
+**/gradle/
+**/.vscode/

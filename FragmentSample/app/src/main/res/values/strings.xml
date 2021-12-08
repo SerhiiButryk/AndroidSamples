@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">App</string>
+
+    <string name="input_field_hint">Enter your name</string>
+    <string name="greetings_title">Welcome to this demo App!</string>
+    <string name="title_enter_info_fragment">Please, provide the information</string>
+    <string name="ok">OK</string>
+    <string name="enter_info_fragment_dialog_confirm_message">Do you want to go back ?</string>
+    <string name="enter_name_info">Please, enter your name</string>
+</resources>
