@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.app.R
+import com.example.app.TestUtils
 import com.example.app.model.UserInfo
 import com.example.app.ui.EnterInfoFragment
 import com.example.app.ui.factory.AppFragmentFactory
@@ -42,7 +43,7 @@ class EnterInfoFragmentTests {
         // 2. Launch fragment
         Log.i(TAG, "setup() 2. Launch fragment")
 
-        Assert.assertNull("Fragment is null", fragmentUnderTheTest)
+        Assert.assertNull("Fragment is NOT null", fragmentUnderTheTest)
 
         fragmentUnderTheTest = FragmentScenario.launchInContainer(EnterInfoFragment::class.java,
             null, R.style.AppTheme_NoActionBar, appFragmentFactory)
@@ -54,7 +55,7 @@ class EnterInfoFragmentTests {
                 viewModelField.isAccessible = true
                 viewModel = viewModelField.get(fragment) as AppViewModel
             } catch (e: Exception) {
-                Log.e(TAG, "setup Failed to get ViewModel instance: $e" )
+                Log.e(TAG, "setup() Failed to get ViewModel instance: $e" )
                 e.printStackTrace()
             }
         }
@@ -128,6 +129,106 @@ class EnterInfoFragmentTests {
         Assert.assertEquals("Action finish flag has wrong value, expected: true, got: $valueToCheck", valueToCheck, true)
 
         Log.i(TAG, "test01_launch_fragment_and_enter_name() Finished")
+    }
+
+    /**
+     * Test for testing recreation of fragment
+     * Steps:
+     * 1. Test recreates fragment
+     * 2. Test checks that fragment is shown
+     */
+    @Test
+    fun test02_recreate_fragment() {
+        Log.i(TAG, "test02_recreate_fragment() Started")
+
+        // 1. Recreate fragment
+        Log.i(TAG, "test02_recreate_fragment() 1. Recreate fragment")
+
+        fragmentUnderTheTest?.recreate()
+
+        // 2. Check that fragment is shown
+        Log.i(TAG, "test02_recreate_fragment() 2. Check that fragment is shown")
+
+        Espresso.onView(ViewMatchers.withId(R.id.title))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+        Log.i(TAG, "test02_recreate_fragment() Finished")
+    }
+
+    /**
+     * Test for testing back button navigation
+     * Steps:
+     * 1. Test clicks back button
+     * 2. Test checks checks if confirm dialog is shown
+     * 3. Test clicks 'ok' button
+     * 4. Test verifies that fragment is closed
+     */
+    @Test
+    fun test03_back_button_click_and_confirm_dialog() {
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Started")
+
+        // 1. Click back button
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Click back button")
+
+        Espresso.pressBack()
+
+        // 2. Check checks if confirm dialog is shown
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Check checks if confirm dialog is shown")
+
+        val expectedText = appContext.getString(R.string.enter_info_fragment_dialog_confirm_message)
+        Espresso.onView(ViewMatchers.withText(expectedText))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+        // 3. Click 'ok' button
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Click 'ok' button")
+
+        Espresso.onView(ViewMatchers.withText(android.R.string.ok))
+            .perform(ViewActions.click())
+
+        // 4. Verify that fragment is closed
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Verify that fragment is closed")
+
+        Assert.assertEquals("Fragment is not closed", TestUtils.isViewDisplayed(R.id.title), false)
+
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Finished")
+    }
+
+    /**
+     * Test for testing back button navigation
+     * Steps:
+     * 1. Test clicks back button
+     * 2. Test checks checks if confirm dialog is shown
+     * 3. Test clicks 'cancel' button
+     * 4. Test verifies that fragment is NOT closed
+     */
+    @Test
+    fun test04_back_button_click_and_cancel_dialog() {
+        Log.i(TAG, "test03_back_button_click_and_cancel_dialog() Started")
+
+        // 1. Click back button
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Click back button")
+
+        Espresso.pressBack()
+
+        // 2. Check checks if confirm dialog is shown
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Check checks if confirm dialog is shown")
+
+        var expectedText = appContext.getString(R.string.enter_info_fragment_dialog_confirm_message)
+        Espresso.onView(ViewMatchers.withText(expectedText))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+        // 3. Click 'cancel' button
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Click 'cancel' button")
+
+        Espresso.onView(ViewMatchers.withText(android.R.string.cancel))
+            .perform(ViewActions.click())
+
+        // 4. Verify that fragment is NOT closed
+        Log.i(TAG, "test03_back_button_click_and_confirm_dialog() Verify that fragment is NOT closed")
+
+        Assert.assertEquals("Fragment is not closed", TestUtils.isViewDisplayed(R.id.title), true)
+
+        Log.i(TAG, "test03_back_button_click_and_cancel_dialog() Finished")
     }
 
     companion object {

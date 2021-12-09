@@ -15,6 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.app.R
+import com.example.app.TestUtils
 import com.example.app.model.UserInfo
 import com.example.app.ui.GreetingsFragment
 import com.example.app.ui.UserActionListener
@@ -112,9 +113,7 @@ class GreetingsFragmentTests {
         // 2. Check that fragment is shown
         Log.i(TAG, "test02_recreate_fragment() 2. Check that fragment is shown")
 
-        val expectedTitleText = appContext.getString(R.string.greetings_title)
-        Espresso.onView(ViewMatchers.withId(R.id.main_title))
-            .check(ViewAssertions.matches(ViewMatchers.withText(expectedTitleText)))
+        Assert.assertEquals("Fragment is not shown", TestUtils.isViewDisplayed(R.id.main_title), true)
 
         Log.i(TAG, "test02_recreate_fragment() Finished")
 
