@@ -10,6 +10,7 @@ This repository cointains android samples of modern android development.
     - Cominucation between Activity, Frgaments and ViewModel
     - Saving and restoring fragment state
     - Managing back button click using back button distpatcher
-    - Isolated fragment testing using FragmnetSenerio under 'androidTest' folder
+    - Testing of fragments using FragmnetSenerio
+    - Testing of activities using ActivityScenario
 
 The list is going to be updated and extended.

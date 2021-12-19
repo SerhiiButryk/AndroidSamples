@@ -10,13 +10,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 /**
- * Runs all app tests
+ * Class runs all app tests
  */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     EnterInfoFragmentTests::class,
     GreetingsFragmentTests::class
 )
-
 class AppTests {
 }

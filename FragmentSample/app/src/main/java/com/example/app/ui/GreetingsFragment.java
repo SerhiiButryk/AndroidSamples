@@ -16,13 +16,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app.R;
+import com.example.app.model.UserInfo;
+import com.example.app.viewmodel.AppViewModel;
 
 import static com.example.app.utils.AppUtils.APP;
 
 /**
- * Represents App Greetings UI
+ *  Represents App Greetings UI
  *
  */
 public class GreetingsFragment extends Fragment {
@@ -33,6 +36,8 @@ public class GreetingsFragment extends Fragment {
     public static final String TITLE_NAME_ARG = "title name arg";
 
     private Button enterInfo;
+    private TextView userGreetings;
+    private AppViewModel appViewModel;
 
     private UserActionListener userActionListener; // Callback to the MainActivity
 
@@ -77,6 +82,8 @@ public class GreetingsFragment extends Fragment {
             TextView title = view.findViewById(R.id.main_title);
             title.setText(titleString);
 
+            userGreetings = view.findViewById(R.id.greetings);
+
             Log.i(TAG, "onViewCreated() arguments retrieved");
 
         } catch (Exception e) {
@@ -100,6 +107,22 @@ public class GreetingsFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         Log.i(TAG, "onViewStateRestored()");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+        // Retrieve data from ViewModel and set user greetings text
+        UserInfo userInfo = appViewModel.getUserInfo().getValue();
+        if (userInfo != null && userInfo.getUserName() != null) {
+            String userName = userInfo.getUserName().trim();
+            userGreetings.setText(String.format(getString(R.string.user_greetings), userName));
+        }
+
+        Log.i(TAG, "onActivityCreated()");
     }
 
     @Override
