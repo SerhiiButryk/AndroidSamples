@@ -32,9 +32,9 @@ import com.example.app.viewmodel.AppViewModel;
 import static com.example.app.utils.AppUtils.APP;
 
 /**
- *  Represents App Enter Info UI
+ *  App's EnterInfo UI Fragment
  *
- *  1. Controls user input
+ *  1. Controls and saves user input
  *  2. Adds Back press listener
  */
 public class EnterInfoFragment extends Fragment {
@@ -128,8 +128,8 @@ public class EnterInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // If User has provided input then set finished flag to true
-                if (hasInfoProvided()) {
-                    appViewModel.setActionFinishFlag();
+                if (isInfoProvided()) {
+                    appViewModel.onUserInfoProvided();
                 } else {
                     Toast.makeText(EnterInfoFragment.this.requireActivity(),
                             getString(R.string.enter_name_info), Toast.LENGTH_SHORT).show();
@@ -140,7 +140,7 @@ public class EnterInfoFragment extends Fragment {
         Log.i(TAG, "onViewCreated()");
     }
 
-    private boolean hasInfoProvided() {
+    private boolean isInfoProvided() {
         return textWatcher.isInfoSet;
     }
 
@@ -159,6 +159,8 @@ public class EnterInfoFragment extends Fragment {
 
         // Get ViewModel reference and init objects
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        Log.i(TAG, "onActivityCreated: got ViewModel: " + appViewModel);
+
         textWatcher = new SimpleTextWatcher(appViewModel);
         inputField.addTextChangedListener(textWatcher);
 

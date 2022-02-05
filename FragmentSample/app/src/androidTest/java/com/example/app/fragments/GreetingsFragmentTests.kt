@@ -18,7 +18,6 @@ import com.example.app.R
 import com.example.app.TestUtils
 import com.example.app.model.UserInfo
 import com.example.app.ui.GreetingsFragment
-import com.example.app.ui.UserActionListener
 import com.example.app.ui.factory.AppFragmentFactory
 import org.junit.*
 import org.junit.runner.RunWith
@@ -38,7 +37,7 @@ class GreetingsFragmentTests {
         // 1. Create fragment factory
         Log.i(TAG, "setup() 1. Create fragment factory")
 
-        val appFragmentFactory: FragmentFactory = AppFragmentFactory(UserInfo(), fragmentHelperClass)
+        val appFragmentFactory: FragmentFactory = AppFragmentFactory(UserInfo())
 
         // 2. Prepare arguments for fragment
         Log.i(TAG, "setup() 2. Prepare arguments for fragment")
@@ -90,8 +89,6 @@ class GreetingsFragmentTests {
         Espresso.onView(ViewMatchers.withId(R.id.add_info_btn))
                 .perform(ViewActions.click())
 
-        Assert.assertTrue("Failed to perform button click", fragmentHelperClass.isOnEnterInfoClicked)
-
         Log.i(TAG, "test01_launch_fragment_and_check_views() Finished")
     }
 
@@ -119,24 +116,9 @@ class GreetingsFragmentTests {
 
     }
 
-    private class FragmentHelperClass : UserActionListener {
-        var isOnEnterInfoClicked = false
-            private set
-
-        override fun onEnterInfoClicked() {
-            isOnEnterInfoClicked = true
-        }
-
-        fun resetState() {
-            isOnEnterInfoClicked = false
-        }
-    }
-
     companion object {
         private val TAG = GreetingsFragmentTests::class.java.simpleName
         private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-
-        private val fragmentHelperClass = FragmentHelperClass()
         private var fragmentUnderTheTest:FragmentScenario<GreetingsFragment>? = null
     }
 

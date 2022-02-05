@@ -10,11 +10,11 @@ import android.util.Log;
 import static com.example.app.utils.AppUtils.APP;
 
 /**
- * Custom app application class
+ * Custom app's application class
  */
 public class MyApplication extends Application {
 
-    public static final String TAG = APP + MyApplication.class.getSimpleName();
+    public static final String TAG = APP + "MyApplication";
 
     /**
      * no-op, logging only

@@ -15,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentFactory;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.savedstate.SavedStateRegistry;
 
 import com.example.app.model.UserInfo;
 import com.example.app.ui.EnterInfoFragment;
 import com.example.app.ui.GreetingsFragment;
-import com.example.app.ui.UserActionListener;
 import com.example.app.ui.factory.AppViewModelFactory;
 import com.example.app.ui.factory.AppFragmentFactory;
 import com.example.app.viewmodel.AppViewModel;
@@ -27,13 +27,12 @@ import com.example.app.viewmodel.AppViewModel;
 /**
  *  App main activity.
  *
- *  1. Handles Fragment transaction
- *  2. Performs initialization
- *  3. Observes for Live Data updates
+ *  1. Handles displaying of correct UI to User
+ *  2. Observes for User actions
  *
  *  See Activity / Fragments lifecycle diagram - https://github.com/xxv/android-lifecycle
  */
-public class MainActivity extends AppCompatActivity implements UserActionListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = APP + MainActivity.class.getSimpleName();
 
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements UserActionListene
 
         // Prepare fragment factory.
         UserInfo userInfo = new UserInfo();
-        FragmentFactory appFragmentFactory = new AppFragmentFactory(userInfo, this);
+        FragmentFactory appFragmentFactory = new AppFragmentFactory(userInfo);
 
         // Factory should be set before the state of fragments are going to be restored
         // in super.onCreate() call.
@@ -76,13 +75,65 @@ public class MainActivity extends AppCompatActivity implements UserActionListene
             Log.i(TAG, "onCreate() Fragment is committed");
         }
 
-        // Create ViewModel with state factory
+        // Create ViewModel with factory
         appViewModel = new ViewModelProvider(this, new AppViewModelFactory(this)).get(AppViewModel.class);
+        Log.i(TAG, "onCreate: got ViewModel: " + appViewModel);
 
-        // Attach observer to the ViewModels LiveData objects
+        // Attach observers to the ViewModels LiveData objects
         setObservers();
 
+        // The below object can be used to save state to Bundle and later restore it
+        // from other components of the app
+        // See - https://developer.android.com/reference/androidx/savedstate/SavedStateRegistry
+        SavedStateRegistry registry = getSavedStateRegistry();
+
         Log.i(TAG, "onCreate() OUT");
+    }
+
+    private void setObservers() {
+        // Observe when User sets new data and handle notification of it
+        appViewModel.getUserInfoLiveData().observe(this, new Observer<UserInfo>() {
+            @Override
+            public void onChanged(UserInfo userInfo) {
+                // Got notification
+                Log.i(TAG, "onChanged() UserInfo has updated");
+            }
+        });
+
+        // Observe when User set user name and handle this action.
+        // Close EnterInfoFragment and reset flag.
+        appViewModel.getUserInfoProvidedLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                if (aBoolean) {
+                    // Got notification
+                    Log.i(TAG, "onChanged() User clicked OK button");
+
+                    // Close EnterInfoFragment and go back to previous fragment
+                    getSupportFragmentManager().popBackStack();
+                }
+
+            }
+        });
+
+        // Observe for User click
+        appViewModel.getOpenEnterInfoUILiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                if (aBoolean) {
+                    Log.i(TAG, "onChanged() Add EnterInfoFragment fragment");
+
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true) // Required by Google's docs (needed for optimization)
+                            .replace(R.id.fragment_container, EnterInfoFragment.class, null, EnterInfoFragment.FRAG_TAG) // With flag
+                            .addToBackStack(null) // Save to fragment back stack
+                            .commit();
+                }
+
+            }
+        });
     }
 
     /**
@@ -157,51 +208,6 @@ public class MainActivity extends AppCompatActivity implements UserActionListene
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestroy()");
-    }
-
-    private void setObservers() {
-        // Observe when UserInfo has updated and handle notification of it
-        appViewModel.getUserInfo().observe(this, new Observer<UserInfo>() {
-            @Override
-            public void onChanged(UserInfo userInfo) {
-                // Got notification
-                Log.i(TAG, "onChanged() UserInfo has updated");
-            }
-        });
-
-        // Observe when User set user name and and handle notification of it.
-        // Close EnterInfoFragment and reset flag.
-        appViewModel.getActionFinishFlag().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-
-                if (aBoolean) {
-
-                    // Got notification
-                    Log.i(TAG, "onChanged() User clicked OK button");
-
-                    // Close EnterInfoFragment and go back to previous fragment
-                    getSupportFragmentManager().popBackStack();
-
-                    // Reset flag
-                    appViewModel.resetActionFinishFlag();
-                }
-
-            }
-        });
-    }
-
-    // Called by GreetingsFragment
-    @Override
-    public void onEnterInfoClicked() {
-
-        Log.i(TAG, "onEnterInfoClicked() Add EnterInfoFragment fragment");
-
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true) // Required by Google's docs (needed for optimization)
-                .replace(R.id.fragment_container, EnterInfoFragment.class, null, EnterInfoFragment.FRAG_TAG) // With flag
-                .addToBackStack(null) // Save to fragment back stack
-                .commit();
     }
 
 }

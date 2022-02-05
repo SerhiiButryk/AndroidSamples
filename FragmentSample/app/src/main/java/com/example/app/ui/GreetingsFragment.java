@@ -25,8 +25,7 @@ import com.example.app.viewmodel.AppViewModel;
 import static com.example.app.utils.AppUtils.APP;
 
 /**
- *  Represents App Greetings UI
- *
+ * App's Greetings UI Fragment
  */
 public class GreetingsFragment extends Fragment {
 
@@ -39,11 +38,8 @@ public class GreetingsFragment extends Fragment {
     private TextView userGreetings;
     private AppViewModel appViewModel;
 
-    private UserActionListener userActionListener; // Callback to the MainActivity
-
-    public GreetingsFragment(UserActionListener userActionListener) {
+    public GreetingsFragment() {
         super();
-        this.userActionListener = userActionListener;
         Log.i(TAG, "GreetingsFragment() GreetingsFragment object is created");
     }
 
@@ -96,7 +92,7 @@ public class GreetingsFragment extends Fragment {
         enterInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userActionListener.onEnterInfoClicked();
+                appViewModel.openEnterInfoUI();
             }
         });
 
@@ -109,14 +105,18 @@ public class GreetingsFragment extends Fragment {
         Log.i(TAG, "onViewStateRestored()");
     }
 
+    // TODO: Remove deprecated calls
+    // Looks like that this can be replaced
+    // with - https://developer.android.com/reference/android/app/Application#registerActivityLifecycleCallbacks(android.app.Application.ActivityLifecycleCallbacks)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        Log.i(TAG, "onActivityCreated: got ViewModel: " + appViewModel);
 
         // Retrieve data from ViewModel and set user greetings text
-        UserInfo userInfo = appViewModel.getUserInfo().getValue();
+        UserInfo userInfo = appViewModel.getUserInfoLiveData().getValue();
         if (userInfo != null && userInfo.getUserName() != null) {
             String userName = userInfo.getUserName().trim();
             userGreetings.setText(String.format(getString(R.string.user_greetings), userName));
@@ -170,10 +170,7 @@ public class GreetingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
-        // Release reference to the activity
-        userActionListener = null;
-
         Log.i(TAG, "onDetach()");
     }
+
 }

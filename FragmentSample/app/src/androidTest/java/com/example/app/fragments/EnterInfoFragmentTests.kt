@@ -38,7 +38,7 @@ class EnterInfoFragmentTests {
         // 1. Create fragment factory
         Log.i(TAG, "setup() 1. Create fragment factory")
 
-        val appFragmentFactory: FragmentFactory = AppFragmentFactory(UserInfo(), null)
+        val appFragmentFactory: FragmentFactory = AppFragmentFactory(UserInfo())
 
         // 2. Launch fragment
         Log.i(TAG, "setup() 2. Launch fragment")
@@ -109,7 +109,7 @@ class EnterInfoFragmentTests {
             .check(ViewAssertions.matches(ViewMatchers.withText(expectedText)))
 
         // Check that ViewModel has correct value before button click
-        var valueToCheck = viewModel?.actionFinishFlag?.value
+        var valueToCheck = viewModel?.userInfoProvidedLiveData?.value
         Assert.assertEquals("Action finish flag has wrong value, expected: false, got: $valueToCheck", valueToCheck, false)
 
         // 2. Enter text
@@ -125,7 +125,7 @@ class EnterInfoFragmentTests {
             .perform(ViewActions.click())
 
         // Check that ViewModel has correct value after button click
-        valueToCheck = viewModel?.actionFinishFlag?.value
+        valueToCheck = viewModel?.userInfoProvidedLiveData?.value
         Assert.assertEquals("Action finish flag has wrong value, expected: true, got: $valueToCheck", valueToCheck, true)
 
         Log.i(TAG, "test01_launch_fragment_and_enter_name() Finished")

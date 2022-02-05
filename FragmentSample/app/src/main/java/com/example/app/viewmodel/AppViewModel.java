@@ -16,28 +16,29 @@ import com.example.app.model.UserInfo;
  *
  *  1. Encapsulates UI data
  *  2. Handles UI data logic
- *  3. Restore UI data on configuration changes or process death
+ *  3. Restores UI data on configuration changes or process death
  */
 
 public class AppViewModel extends ViewModel {
 
-    // LiveData objects
-    private MutableLiveData<UserInfo> userInfoLiveData;
+    // Hold enter information by User
+    private final MutableLiveData<UserInfo> userInfoData = new MutableLiveData<>();
     // Used to trigger specific logic in response to User's button click
-    private MutableLiveData<Boolean> actionFinishFlag;
+    private final MutableLiveData<Boolean> userInfoProvidedFlag = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> openEnterInfoUIFlag = new MutableLiveData<>();
 
     // Handler for restoring UI data
     // Use to save simple key/value data
     private SavedStateHandle stateHandle;
 
     public AppViewModel(SavedStateHandle stateHandle) {
-
-        userInfoLiveData = new MutableLiveData<>();
-
-        actionFinishFlag = new MutableLiveData<>();
-        actionFinishFlag.setValue(false);
-
         this.stateHandle = stateHandle;
+
+        // Set initial values
+        userInfoProvidedFlag.setValue(false);
+        openEnterInfoUIFlag.setValue(false);
+
+        // Restore UI data
         restoreData();
     }
 
@@ -50,24 +51,34 @@ public class AppViewModel extends ViewModel {
         // ...
     }
 
-    public LiveData<UserInfo> getUserInfo() {
-        return userInfoLiveData;
+    public LiveData<UserInfo> getUserInfoLiveData() {
+        return userInfoData;
     }
 
     public void setUserInfo(UserInfo userInfo) {
-        userInfoLiveData.setValue(userInfo);
+        userInfoData.setValue(userInfo);
     }
 
-    public LiveData<Boolean> getActionFinishFlag() {
-        return actionFinishFlag;
+    public LiveData<Boolean> getUserInfoProvidedLiveData() {
+        return userInfoProvidedFlag;
     }
 
-    public void setActionFinishFlag() {
-        actionFinishFlag.setValue(true);
+    public void onUserInfoProvided() {
+        // As a consequence, after this call all subscribed observers will get notification.
+        userInfoProvidedFlag.setValue(true);
+        // Reset to previous state
+        openEnterInfoUIFlag.setValue(false);
     }
 
-    public void resetActionFinishFlag() {
-        actionFinishFlag.setValue(false);
+    public void openEnterInfoUI() {
+        // As a consequence, after this call all subscribed observers will get notification.
+        openEnterInfoUIFlag.setValue(true);
+        // Reset to previous state
+        openEnterInfoUIFlag.setValue(false);
+    }
+
+    public LiveData<Boolean> getOpenEnterInfoUILiveData() {
+        return openEnterInfoUIFlag;
     }
 
 }

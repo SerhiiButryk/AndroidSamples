@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentFactory;
 import com.example.app.model.UserInfo;
 import com.example.app.ui.EnterInfoFragment;
 import com.example.app.ui.GreetingsFragment;
-import com.example.app.ui.UserActionListener;
 
 /**
  * Demonstrate the usage of FragmentFactory factory
@@ -20,11 +19,9 @@ import com.example.app.ui.UserActionListener;
 public class AppFragmentFactory extends FragmentFactory {
 
     private UserInfo userInfo;
-    private UserActionListener userActionListener;
 
-    public AppFragmentFactory(UserInfo userInfo, UserActionListener userActionListener) {
+    public AppFragmentFactory(UserInfo userInfo) {
         this.userInfo = userInfo;
-        this.userActionListener = userActionListener;
     }
 
     @NonNull
@@ -36,7 +33,7 @@ public class AppFragmentFactory extends FragmentFactory {
         if (fragmentClass == EnterInfoFragment.class) {
             return new EnterInfoFragment(userInfo);
         } else if (fragmentClass == GreetingsFragment.class) {
-            return new GreetingsFragment(userActionListener);
+            return new GreetingsFragment();
         } else {
             return super.instantiate(classLoader, className);
         }

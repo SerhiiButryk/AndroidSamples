@@ -22,11 +22,6 @@ android {
         }
     }
 
-    // Got "NoSuchMethodError" exception when running test with message - "No static method metafactory".
-    // This looks like an issue with compilation option.
-    // Details: https://stackoverflow.com/questions/62034008/error-using-retrofit-builder-in-android-app-java-lang-nosuchmethoderror-no-sta
-    // Adding this script fixes the issue.
-    // Fix START
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,7 +30,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    // Fix END
 
 }
 
