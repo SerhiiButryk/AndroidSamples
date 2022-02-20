@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ServiceSample</string>
+
+    <string name="started_service_desc">My started service</string>
+    <string name="started_service_process_name">:com.app.mystarted.process</string>
+    <string name="started_service_process_label">MyStartedService</string>
+
+    <string name="start_started_service">Start started service</string>
+    <string name="start_bound_service">Start bound service</string>
+    <string name="start_foreground_service">Start foreground service</string>
+</resources>

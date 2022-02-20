@@ -20,7 +20,7 @@ import static com.example.app.utils.AppUtils.APP;
  * Demonstrate the usage of AbstractSavedStateViewModelFactory factory
  */
 
-public class AppViewModelFactory extends AbstractSavedStateViewModelFactory {
+public class AppViewModelFactory extends AbstractSavedStateViewModelFactory  {
 
     public static final String TAG = APP + AppViewModelFactory.class.getSimpleName();
 

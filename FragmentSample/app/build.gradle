@@ -47,7 +47,7 @@ dependencies {
     def material_version = "1.4.0"
     implementation "com.google.android.material:material:$material_version"
 
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = "2.5.0-alpha02"
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
