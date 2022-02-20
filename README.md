@@ -13,7 +13,7 @@ This repository cointains android samples of modern android development.
     - Testing of fragments using FragmnetSenerio
     - Testing of activities using ActivityScenario
 
-  **'SarviceSample'** app sample demonstrates:
+- **'SarviceSample'** app sample demonstrates:
 
     - Background Services
 
