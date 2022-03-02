@@ -10,9 +10,9 @@ import android.content.res.Configuration
 import android.util.Log
 
 /**
- * Abstract service class. No-op, it implements methods and only prints logs.
+ * Abstract service class. No-op, it only prints logs.
  */
-abstract class AbstractServiceLogging(private val TAG: String) : Service() {
+abstract class BaseService(private val TAG: String) : Service() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         Log.i(TAG, "onConfigurationChanged: called")

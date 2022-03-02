@@ -40,4 +40,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
+
+    <Button
+        android:id="@+id/send_work_to_service"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/send_work_to_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_foreground_service" />
+
+    <Button
+        android:id="@+id/unbind_service"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/unbind_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_work_to_service" />
+
+    <Button
+        android:id="@+id/log_service_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/log_services_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unbind_service" />
 </androidx.constraintlayout.widget.ConstraintLayout>

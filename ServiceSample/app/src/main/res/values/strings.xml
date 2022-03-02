@@ -6,6 +6,9 @@
     <string name="started_service_process_label">MyStartedService</string>
 
     <string name="start_started_service">Start started service</string>
-    <string name="start_bound_service">Start bound service</string>
+    <string name="start_bound_service">Bind to service</string>
     <string name="start_foreground_service">Start foreground service</string>
+    <string name="send_work_to_service">Send work to service</string>
+    <string name="unbind_service">Unbind service</string>
+    <string name="log_services_info">Log services info</string>
 </resources>
