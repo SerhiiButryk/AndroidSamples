@@ -16,5 +16,6 @@ This repository cointains android samples of modern android development.
 - **'SarviceSample'** app sample demonstrates:
 
     - Background Services
+    - Bound Services
 
 The list is going to be updated and extended.
