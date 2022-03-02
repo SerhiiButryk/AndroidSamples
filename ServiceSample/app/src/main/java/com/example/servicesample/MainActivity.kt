@@ -14,7 +14,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.servicesample.MyApplication.Companion.APP_TAG
 import com.example.servicesample.services.BackgroundService
-
+import com.example.servicesample.services.ForegroundService
 
 /**
  * Activity which displays UI and starts and stops Services.
@@ -63,12 +63,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
-         * Not implemented yet
+         * Launch foreground service
          */
         findViewById<Button>(R.id.start_foreground_service).setOnClickListener {
-            TODO("Not yet implemented")
+            val intent = ForegroundService.getIntentForServiceLaunch(this)
+            val componentName = startForegroundService(intent)
+            Log.i(TAG, "Launched foreground service: $componentName")
         }
 
+        /**
+         * Stop foreground service
+         */
+        findViewById<Button>(R.id.stop_foreground_service).setOnClickListener {
+            val intent = ForegroundService.getIntentForServiceLaunch(this)
+            val success = stopService(intent)
+            Log.i(TAG, "Stop foreground service: $success")
+        }
+
+        /**
+         * Launch bound service
+         */
         findViewById<Button>(R.id.start_boundh_service_btn).setOnClickListener {
             val intent = BackgroundService.getIntentForServiceLaunch(this)
             val result = bindService(intent, backgroundServiceConnection, Context.BIND_AUTO_CREATE)
@@ -82,6 +96,9 @@ class MainActivity : AppCompatActivity() {
             isBindServiceRequested = true
         }
 
+        /**
+         * Send work to a bound service
+         */
         findViewById<Button>(R.id.send_work_to_service).setOnClickListener {
             if (serviceMessenger != null) {
                 // Send some message to service to start work
@@ -96,6 +113,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Unbind service
+         */
         findViewById<Button>(R.id.unbind_service).setOnClickListener{
             // If Service was not bound, 'IllegalArgumentException' exception is thrown
             // with message - "Service not registered: ..."
@@ -107,6 +127,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * Log debug info
+         */
         findViewById<Button>(R.id.log_service_info).setOnClickListener{
             logRunningServicesInfo()
         }

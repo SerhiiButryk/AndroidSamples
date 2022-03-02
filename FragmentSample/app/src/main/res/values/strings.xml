@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">FragmentSample</string>
 
     <string name="input_field_hint">Enter your name</string>
     <string name="greetings_title">Welcome to this demo App!</string>

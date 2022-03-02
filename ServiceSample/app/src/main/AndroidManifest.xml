@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.servicesample">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -25,7 +27,13 @@
             android:label="@string/started_service_process_label"
             android:process="@string/started_service_process_name"
             android:description="@string/started_service_desc"
-            android:exported="true" />
+            android:exported="false" />
+
+        <service android:name="com.example.servicesample.services.ForegroundService"
+            android:label="@string/foreground_service_process_label"
+            android:process="@string/foreground_service_process_name"
+            android:description="@string/foreground_service_desc"
+            android:exported="false" />
 
     </application>
 

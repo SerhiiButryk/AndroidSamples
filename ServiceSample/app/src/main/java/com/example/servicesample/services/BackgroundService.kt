@@ -104,7 +104,6 @@ class BackgroundService : BaseService(TAG) {
     companion object {
         private const val TAG = "$APP_TAG-StartedService"
         const val MESSAGE_DO_WORK = 1
-
         /**
          * Creates Intent for launching this service
          */

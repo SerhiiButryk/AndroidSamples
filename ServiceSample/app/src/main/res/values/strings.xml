@@ -2,8 +2,12 @@
     <string name="app_name">ServiceSample</string>
 
     <string name="started_service_desc">My started service</string>
-    <string name="started_service_process_name">:com.app.mystarted.process</string>
+    <string name="started_service_process_name">:com.app.mybackground.process</string>
     <string name="started_service_process_label">MyStartedService</string>
+
+    <string name="foreground_service_desc">My foreground service</string>
+    <string name="foreground_service_process_name">:com.app.myforeground.process</string>
+    <string name="foreground_service_process_label">MyForegroundService</string>
 
     <string name="start_started_service">Start started service</string>
     <string name="start_bound_service">Bind to service</string>
@@ -11,4 +15,5 @@
     <string name="send_work_to_service">Send work to service</string>
     <string name="unbind_service">Unbind service</string>
     <string name="log_services_info">Log services info</string>
+    <string name="stop_foreground_service">Stop foreground service</string>
 </resources>
