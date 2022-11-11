@@ -1,6 +1,6 @@
 # AndroidExamples
 
-This repository cointains android samples of modern android development. 
+This repository cointains samples for modern android development. 
 
 # Android samples list
 
@@ -18,5 +18,13 @@ This repository cointains android samples of modern android development.
     - Background Service
     - Bound Service
     - Foreground Service
+
+- **'NavigationSample'** app sample demonstrates:
+
+    - Using navigation to go from one to another direction
+
+- **'HandlerLooperSample'** app sample demonstrates:
+
+    - Using looper and handler to implement a thread with message queue
 
 The list is going to be updated and extended.
