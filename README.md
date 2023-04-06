@@ -27,4 +27,8 @@ This repository cointains samples for modern android development.
 
     - Using looper and handler to implement a thread with message queue
 
+- **'PersonContactsSample'** app sample demonstrates:
+
+    - Using navigation to work with view model which is scoped to navigation graph  
+
 The list is going to be updated and extended.

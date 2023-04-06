@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PersonContactsApp</string>
+    <string name="please_enter_your_age">Please, enter your age</string>
+    <string name="please_enter_you_name">Please, enter you name</string>
+    <string name="enter">Enter</string>
+    <string name="name_string">Your name is %s</string>
+    <string name="age_string">Your age is %s</string>
+    <string name="default_string">Information is not available</string>
+</resources>
