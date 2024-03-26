@@ -1,4 +1,4 @@
-# AndroidExamples
+# Android Samples
 
 This repository cointains samples for modern android development. 
 
@@ -31,4 +31,14 @@ This repository cointains samples for modern android development.
 
     - Using navigation to work with view model which is scoped to navigation graph  
 
-The list is going to be updated and extended.
+- **'ComposeSample'** app sample demonstrates:
+    
+    - Using Compose to implement UI
+
+- **'CoroutinesSample'** app sample demonstrates:
+
+    - Using coroutines in Android
+
+- **'AIDLSample'** app sample demonstrates:
+
+    - Using AIDL in Android to perform IPC
