@@ -14,6 +14,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.servicesample.MyApplication.Companion.APP_TAG
 import com.example.servicesample.services.BackgroundService
+import com.example.servicesample.services.BackgroundService.*
 import com.example.servicesample.services.ForegroundService
 
 /**
@@ -23,13 +24,16 @@ class MainActivity : AppCompatActivity() {
 
     private var isServiceBound = false
     private var isBindServiceRequested = false
-    private var serviceMessenger: Messenger? = null
+    private var serviceHandler: Handler? = null
     private var serviceName: ComponentName? = null
 
     private val backgroundServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             Log.i(TAG, "onServiceConnected: $name")
-            serviceMessenger = Messenger(service)
+
+            val serviceBinder = service as ServiceBinder
+            serviceHandler = serviceBinder.getServiceHandler()
+
             serviceName = name
             isServiceBound = true
         }
@@ -37,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceDisconnected(name: ComponentName) {
             Log.i(TAG, "onServiceDisconnected: $name")
             isServiceBound = false
-            serviceMessenger = null
+            serviceHandler = null
         }
     }
 
@@ -100,12 +104,12 @@ class MainActivity : AppCompatActivity() {
          * Send work to a bound service
          */
         findViewById<Button>(R.id.send_work_to_service).setOnClickListener {
-            if (serviceMessenger != null) {
-                // Send some message to service to start work
+            if (serviceHandler != null) {
+                // Send some message to service to do some work
                 val message = Message.obtain()
                 message.what = BackgroundService.MESSAGE_DO_WORK
-                // Send message to Service
-                serviceMessenger!!.send(message)
+                // Send message to service
+                serviceHandler?.sendMessage(message)
 
                 Log.i(TAG, "Message to service $serviceName is sent")
             } else {

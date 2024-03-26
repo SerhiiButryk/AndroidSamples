@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ServiceProvider</string>
+    <string name="service_desc">Serhii service</string>
+</resources>

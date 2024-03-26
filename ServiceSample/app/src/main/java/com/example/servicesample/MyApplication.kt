@@ -19,7 +19,7 @@ class MyApplication : Application() {
 
     companion object {
         /**
-         * Tag for filtering logs of this Sample app
+         * Tag for filtering logs of this sample app
          */
         const val APP_TAG = "ServiceSample"
         private const val TAG = "$APP_TAG-MyApplication"

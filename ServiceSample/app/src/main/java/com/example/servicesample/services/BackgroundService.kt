@@ -20,17 +20,18 @@ class BackgroundService : BaseService(TAG) {
 
     private val handlerThread: HandlerThread = HandlerThread("StartedServiceHandlerThread",
         Process.THREAD_PRIORITY_BACKGROUND)
+
     private var serviceHandler: Handler? = null
-    private var messenger: Messenger? = null
     private var serviceUpTimeMillis: Long = 0
     private val timeFormatter = SimpleDateFormat("mm:ss.SSS")
-    private val binder = ServiceBinder()
+
+    private lateinit var binder: ServiceBinder
 
     /**
      * Service's binder
      */
-    inner class ServiceBinder : Binder() {
-        fun getService(): BackgroundService = this@BackgroundService
+    class ServiceBinder(private val handler: Handler) : Binder() {
+        fun getServiceHandler(): Handler = handler
     }
 
     override fun onCreate() {
@@ -47,10 +48,11 @@ class BackgroundService : BaseService(TAG) {
                 try {
                     Thread.sleep(5*1000) // 5 seconds
                 } catch (e: Exception) {}
-
                 Log.i(TAG, "handleMessage: OUT")
             }
         }
+
+        binder = ServiceBinder(serviceHandler!!)
 
         // Save creation time
         serviceUpTimeMillis = System.currentTimeMillis()
@@ -68,11 +70,13 @@ class BackgroundService : BaseService(TAG) {
 
     override fun onBind(intent: Intent?): IBinder? {
         Log.i(TAG, "onBind: is called")
-        // Return Service's binder implementation. Client can use it to call Service's
-        // public methods. Alternatively, here we can create and return a Messenger object
+        // Return service's binder object. Client can use it for communication, but only
+        // if service runs in the same process.
+        // Alternatively, we can create and return a Messenger object
         // and communicate with Service throughout it.
         // {@code return Messenger(serviceHandler) }
-        return Messenger(serviceHandler).binder
+        // return Messenger(serviceHandler).binder
+        return binder
     }
 
     override fun onDestroy() {
@@ -89,12 +93,6 @@ class BackgroundService : BaseService(TAG) {
 
         super.onDestroy()
     }
-
-    // Returns Service's Handler
-    fun getServiceHandler() : Handler = serviceHandler!!
-
-    // Returns Service's Messenger
-    fun getMessenger() : Messenger = messenger!!
 
     private fun logUpTime() {
         val difference = Date(System.currentTimeMillis() - serviceUpTimeMillis)

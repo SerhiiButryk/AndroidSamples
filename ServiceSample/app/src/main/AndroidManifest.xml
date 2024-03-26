@@ -25,9 +25,10 @@
 
         <service android:name="com.example.servicesample.services.BackgroundService"
             android:label="@string/started_service_process_label"
-            android:process="@string/started_service_process_name"
             android:description="@string/started_service_desc"
             android:exported="false" />
+
+        <!--  android:process="@string/started_service_process_name" -->
 
         <service android:name="com.example.servicesample.services.ForegroundService"
             android:label="@string/foreground_service_process_label"
