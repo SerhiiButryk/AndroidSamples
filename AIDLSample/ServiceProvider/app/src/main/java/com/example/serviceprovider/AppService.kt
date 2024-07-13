@@ -8,11 +8,11 @@ import com.example.service.IServiceInfo
 
 class AppService : Service() {
 
-    private val name = "My cool name"
+    private val name = "My cool service"
 
     private val myService = object : IServiceInfo.Stub() {
         override fun getServiceName(): String {
-            Log.i(tag, "AppService::getServiceName: called")
+            Log.i(TAG, "AppService::getServiceName: called from ${Thread.currentThread().name}")
             return name;
         }
     }
@@ -20,19 +20,19 @@ class AppService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        Log.i(tag, "AppService::onCreate: called")
+        Log.i(TAG, "AppService::onCreate: called")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.i(tag, "AppService::onStartCommand: called")
+        Log.i(TAG, "AppService::onStartCommand: called")
 
         return super.onStartCommand(intent, flags, startId)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
 
-        Log.i(tag, "AppService::onBind: called")
+        Log.i(TAG, "AppService::onBind: called ${myService.asBinder()}")
 
         return myService;
     }
@@ -40,6 +40,6 @@ class AppService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        Log.i(tag, "AppService::onDestroy: called")
+        Log.i(TAG, "AppService::onDestroy: called")
     }
 }

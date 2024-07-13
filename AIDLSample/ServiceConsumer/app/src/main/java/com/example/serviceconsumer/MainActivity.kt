@@ -4,14 +4,15 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.os.IInterface
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.example.service.IServiceInfo
 
-const val tag: String = "ServiceConsumer"
+const val TAG: String = "ServiceConsumer"
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,14 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             myService = IServiceInfo.Stub.asInterface(service)
-
-
-
-            Log.i(tag, "onServiceConnected: called $myService")
+            Log.i(TAG, "onServiceConnected: called, binder = ${(myService as? IInterface)?.asBinder()}")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            Log.i(tag, "onServiceDisconnected: called")
+            Log.i(TAG, "onServiceDisconnected: called")
         }
     }
 
@@ -38,16 +36,16 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.start_btn).setOnClickListener {
 
-            Log.i(tag, "onCreate: calling service")
+            Log.i(TAG, "onCreate: calling service")
 
             try {
 
                 val name = myService?.serviceName ?: "null"
 
-                Log.i(tag, "Got result: $name")
+                Log.i(TAG, "Got result: $name")
 
             } catch (e: Exception) {
-                Log.i(tag, "ERROR: $e")
+                Log.i(TAG, "ERROR: $e")
                 e.printStackTrace()
             }
         }
@@ -55,18 +53,15 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.bind_btn).setOnClickListener{
             val intent = Intent("com.example.BIND")
             intent.setClassName("com.example.serviceprovider", "com.example.serviceprovider.AppService")
-
             val result = bindService(intent, connection, Context.BIND_AUTO_CREATE)
-            Log.i(tag, "Bind result: $result")
+            Log.i(TAG, "Bind result: $result")
         }
 
         findViewById<Button>(R.id.unbind_btn).setOnClickListener{
-
             unbindService(connection)
-
-            Log.i(tag, "Unbind")
+            Log.i(TAG, "Unbind")
         }
 
-        Log.i(tag, "onCreate: called")
+        Log.i(TAG, "onCreate: called")
     }
 }

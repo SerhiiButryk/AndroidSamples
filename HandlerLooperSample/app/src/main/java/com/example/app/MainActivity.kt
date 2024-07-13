@@ -1,12 +1,10 @@
 package com.example.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.HandlerThread
 import android.os.Message
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 
 private const val TAG = "MainActivity"
 
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_send_message).setOnClickListener {
             Log.i(TAG, "onCreate: send message")
             val ms = Message.obtain()
-            myThread.getHandler()?.sendMessage(ms)
+            myThread.getHandler().sendMessage(ms)
         }
 
     }
