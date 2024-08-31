@@ -1,0 +1,17 @@
+<network-security-config>
+    <!-- Prevent error net::ERR_CLEARTEXT_NOT_PERMITTED when loading HTTP websites (without SSL) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">gmaiis01.gma.sw.rim.net</domain>
+        <domain includeSubdomains="true">gmaiis03.gma.sw.rim.net</domain>
+        <domain includeSubdomains="true">gd-lviv22.gd.sw.rim.net</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">via.placeholder.com</domain>
+    </domain-config>
+
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust user added CAs while debuggable only -->
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
