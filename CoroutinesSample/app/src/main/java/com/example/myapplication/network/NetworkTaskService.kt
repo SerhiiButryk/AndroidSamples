@@ -1,7 +1,6 @@
 package com.example.myapplication.network
 
 import android.util.Log
-import com.example.myapplication.TAG
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +23,8 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 var count: Int = 1
+
+private const val TAG = "CoroutineSample"
 
 class NetworkTaskManager {
 

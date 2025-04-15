@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import com.example.myapplication.network.NetworkTaskManager
 import com.example.myapplication.ui.MainUI
 
-const val TAG = "CoroutineSample"
-
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

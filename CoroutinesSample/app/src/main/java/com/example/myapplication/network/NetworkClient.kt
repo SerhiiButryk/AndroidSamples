@@ -1,7 +1,6 @@
 package com.example.myapplication.network
 
 import android.util.Log
-import com.example.myapplication.TAG
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -12,6 +11,8 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.Base64
+
+private const val TAG = "CoroutineSample"
 
 val username = "SerhiiButryk"
 // https://github.com/settings/tokens/new

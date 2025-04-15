@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.myapplication.data.SampleData
 import com.example.myapplication.ui.Conversation
+import com.example.myapplication.ui.SampleUI
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    Conversation(messages = SampleData.conversationSample)
+//                    Conversation(messages = SampleData.conversationSample)
+                    SampleUI()
                 }
             }
         }
